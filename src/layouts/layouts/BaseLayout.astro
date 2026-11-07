@@ -1,0 +1,81 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { title = 'مدونة العمودي', description = 'مقالات في الأعمال والقيادة والإدارة', image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title === 'مدونة العمودي' ? title : `${title} — مدونة العمودي`}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalURL}>
+  {image && <meta property="og:image" content={image}>}
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body>
+
+  <!-- ═══ MASTHEAD ═══ -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-top">
+        <div class="masthead-date" id="current-date">السبت ٧ نوفمبر ٢٠٢٦</div>
+        <nav class="masthead-nav">
+          <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
+          <a href="/tag/الأعمال">الأعمال</a>
+          <a href="/tag/القيادة">القيادة</a>
+          <a href="/tag/التفاوض">التفاوض</a>
+          <a href="/tag/علم-النفس">علم النفس</a>
+        </nav>
+      </div>
+      <div class="masthead-center">
+        <div class="masthead-side-right">
+          <div>مستشار إداري معتمد</div>
+          <div class="gold">PMP®</div>
+        </div>
+        <a href="/" class="logo-block">
+          <img src="/images/logo.png" alt="مدونة العمودي" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="logo-fallback" style="display:none">
+            <div class="logo-name">مدونة العمودي</div>
+            <div class="logo-rule"><span class="rule-line"></span><span class="diamond"></span><span class="rule-line"></span></div>
+            <div class="logo-tagline">أعمال · قيادة · إدارة</div>
+          </div>
+        </a>
+        <div class="masthead-side-left">
+          <div>blog.alamodi.site</div>
+          <a href="https://alamodiai.site" target="_blank" class="gold">المستشار للأعمال ←</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ CONTENT ═══ -->
+  <main>
+    <slot />
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">مدونة العمودي</div>
+      <div class="footer-links">
+        <a href="https://alamodiai.site" target="_blank">المستشار للأعمال</a>
+        <span class="sep">·</span>
+        <a href="https://alamodi.site" target="_blank">الموقع الشخصي</a>
+      </div>
+      <div class="footer-copy">© {new Date().getFullYear()} عبدالناصر محمد العمودي — جميع الحقوق محفوظة</div>
+    </div>
+  </footer>
+
+</body>
+</html>

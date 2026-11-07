@@ -1,0 +1,526 @@
+/* ═══ TOKENS ═══ */
+:root {
+  --paper: #F7F5F0;
+  --paper2: #EDEAE2;
+  --ink: #1C1C1A;
+  --ink2: #3D3D38;
+  --ink3: #7A7A70;
+  --gold: #9C6E2E;
+  --rule: #D8D4C8;
+  --rule-heavy: #B8B2A0;
+  --red: #A02C1A;
+  --max-w: 1200px;
+}
+
+/* ═══ RESET ═══ */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  direction: rtl;
+  line-height: 1.7;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ═══ MASTHEAD ═══ */
+.masthead {
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(28,28,26,0.07);
+}
+.masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.masthead-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead-date {
+  font-size: 11px;
+  color: var(--ink3);
+  letter-spacing: 0.05em;
+}
+.masthead-nav {
+  display: flex;
+  gap: 0;
+}
+.masthead-nav a {
+  font-size: 11px;
+  color: var(--ink3);
+  padding: 0 12px;
+  border-right: 1px solid var(--rule);
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+.masthead-nav a:last-child { border-right: none; }
+.masthead-nav a:hover, .masthead-nav a.active { color: var(--red); font-weight: 600; }
+
+.masthead-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px;
+  gap: 20px;
+}
+.masthead-side-right, .masthead-side-left {
+  font-size: 11px;
+  color: var(--ink3);
+  line-height: 1.6;
+  min-width: 140px;
+}
+.masthead-side-left { text-align: left; }
+.gold { color: var(--gold); font-weight: 600; }
+
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+}
+.logo-img {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+.logo-name {
+  font-family: 'Scheherazade New', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.logo-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin: 4px 0;
+}
+.rule-line { flex: 1; height: 1px; background: var(--ink); max-width: 50px; display: block; }
+.diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); display: block; }
+.logo-tagline {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink3);
+}
+
+/* ═══ HOME PAGE ═══ */
+.home-layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 0;
+  align-items: start;
+}
+
+/* المقال المميز */
+.featured-section {
+  padding: 28px 32px 24px 0;
+  border-left: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--red); opacity: 0.25; }
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 24px;
+  align-items: start;
+}
+.featured-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.featured-title a:hover { color: var(--gold); }
+.featured-deck {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.8;
+  font-weight: 300;
+  margin: 0 0 14px;
+}
+.featured-byline {
+  font-size: 11px;
+  color: var(--ink3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.byline-name { color: var(--gold); font-weight: 600; }
+.tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.tag {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  background: var(--paper2);
+  padding: 3px 8px;
+  font-weight: 600;
+}
+
+.featured-img-box {
+  background: linear-gradient(160deg, #2A1F14 0%, #1A140C 100%);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+.featured-img-box img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+.featured-quote {
+  position: relative;
+  z-index: 1;
+  font-family: 'Scheherazade New', serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(247,245,240,0.8);
+  font-style: italic;
+}
+.quote-mark {
+  display: block;
+  font-size: 32px;
+  line-height: 0.6;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+/* شبكة المقالات */
+.articles-section {
+  padding: 0 32px 32px 0;
+  border-left: 1px solid var(--rule);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0 12px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 0;
+}
+.section-title {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 1px; background: var(--rule); }
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.article-card {
+  padding: 16px 20px 16px 0;
+  border-left: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.article-card:last-child { border-left: none; padding-left: 0; }
+.article-card:first-child { padding-right: 0; }
+.card-tag {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+}
+.card-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--ink);
+  flex: 1;
+}
+.card-title a:hover { color: var(--gold); }
+.card-excerpt { font-size: 11px; color: var(--ink3); line-height: 1.65; }
+.card-date { font-size: 10px; color: var(--ink3); margin-top: auto; padding-top: 8px; }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: none;
+}
+.sb-section {
+  padding: 18px 0 18px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.sb-head {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 700;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.sb-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--rule);
+  font-size: 12px;
+  color: var(--ink2);
+  transition: color 0.15s;
+}
+.sb-link:last-child { border-bottom: none; }
+.sb-link:hover { color: var(--gold); }
+.sb-count { font-size: 10px; color: var(--ink3); }
+
+/* ═══ إعلان المستشار ═══ */
+.ad-block {
+  background: var(--ink);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+.ad-block::before {
+  content: '';
+  position: absolute;
+  top: -30px; left: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(156,110,46,0.2) 0%, transparent 70%);
+}
+.ad-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ad-rule-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.3; }
+.ad-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ad-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #F7F5F0;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+.ad-desc {
+  font-size: 11px;
+  color: rgba(247,245,240,0.55);
+  line-height: 1.65;
+  position: relative;
+  z-index: 1;
+}
+.ad-btn {
+  display: block;
+  background: var(--gold);
+  color: #1C1C1A;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 10px 16px;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  letter-spacing: 0.05em;
+  transition: opacity 0.15s;
+  position: relative;
+  z-index: 1;
+}
+.ad-btn:hover { opacity: 0.9; }
+.ad-note {
+  font-size: 9px;
+  color: rgba(247,245,240,0.3);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══ ARTICLE PAGE ═══ */
+.article-layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 0;
+}
+.article-main {
+  padding: 36px 40px 60px 0;
+  border-left: 1px solid var(--rule);
+}
+.article-header { margin-bottom: 28px; }
+.article-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.article-h1 {
+  font-family: 'Scheherazade New', serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.article-desc {
+  font-size: 16px;
+  color: var(--ink2);
+  line-height: 1.8;
+  font-weight: 300;
+  border-right: 3px solid var(--gold);
+  padding-right: 16px;
+  margin: 0 0 20px;
+}
+.article-meta {
+  font-size: 11px;
+  color: var(--ink3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 0;
+}
+.article-cover {
+  width: 100%;
+  aspect-ratio: 16/7;
+  object-fit: cover;
+  margin-bottom: 32px;
+}
+
+/* محتوى المقال */
+.article-body {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink2);
+}
+.article-body h2 {
+  font-family: 'Scheherazade New', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 36px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.article-body h3 {
+  font-family: 'Scheherazade New', serif;
+  font-size: 20px;
+  color: var(--ink);
+  margin: 24px 0 8px;
+}
+.article-body p { margin: 0 0 18px; }
+.article-body strong { color: var(--ink); font-weight: 600; }
+.article-body blockquote {
+  border-right: 3px solid var(--gold);
+  padding-right: 20px;
+  margin: 24px 0;
+  color: var(--ink3);
+  font-style: italic;
+  font-size: 17px;
+}
+
+/* ═══ ARTICLE SIDEBAR ═══ */
+.article-sidebar { padding: 36px 0 36px 24px; }
+
+/* ═══ FOOTER ═══ */
+.site-footer {
+  background: var(--ink);
+  color: rgba(247,245,240,0.6);
+  padding: 28px 24px;
+  margin-top: 0;
+  border-top: 3px solid var(--gold);
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  font-family: 'Scheherazade New', serif;
+  font-size: 20px;
+  color: var(--gold);
+}
+.footer-links { display: flex; gap: 8px; font-size: 12px; }
+.footer-links a { color: rgba(247,245,240,0.6); }
+.footer-links a:hover { color: var(--gold); }
+.sep { color: rgba(247,245,240,0.3); }
+.footer-copy { font-size: 11px; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .home-layout, .article-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar, .article-sidebar { border-top: 2px solid var(--rule); }
+  .featured-grid { grid-template-columns: 1fr; }
+  .featured-img-box { display: none; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .article-card { border-left: none; border-bottom: 1px solid var(--rule); padding: 16px 0; }
+  .masthead-side-right, .masthead-side-left { display: none; }
+  .masthead-nav { display: none; }
+  .article-h1 { font-size: 28px; }
+  .featured-title { font-size: 24px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}

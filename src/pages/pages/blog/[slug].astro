@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
+}
+
+function readTime(body: string) {
+  return Math.ceil(body.split(/\s+/).length / 200);
+}
+---
+<BaseLayout title={post.data.title} description={post.data.description} image={post.data.image}>
+  <div class="article-layout">
+
+    <article class="article-main">
+      <header class="article-header">
+        <div class="article-eyebrow">
+          {post.data.tags.map((tag, i) => (
+            <span>{i > 0 ? ' · ' : ''}<a href={`/tag/${tag}`}>{tag}</a></span>
+          ))}
+        </div>
+        <h1 class="article-h1">{post.data.title}</h1>
+        <p class="article-desc">{post.data.description}</p>
+        <div class="article-meta">
+          <span class="byline-name">{post.data.author}</span>
+          <span>·</span>
+          <span>{formatDate(post.data.pubDate)}</span>
+          <span>·</span>
+          <span>{readTime(post.body)} دقائق للقراءة</span>
+        </div>
+      </header>
+
+      {post.data.image && (
+        <img src={post.data.image} alt={post.data.title} class="article-cover">
+      )}
+
+      <div class="article-body">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="article-sidebar sidebar">
+      <div class="sb-section">
+        <div class="sb-head">الموضوعات</div>
+        <a href="/tag/الأعمال" class="sb-link"><span>الأعمال والإدارة</span></a>
+        <a href="/tag/القيادة" class="sb-link"><span>القيادة</span></a>
+        <a href="/tag/علم-النفس" class="sb-link"><span>علم النفس</span></a>
+        <a href="/tag/التفاوض" class="sb-link"><span>التفاوض</span></a>
+      </div>
+
+      <div class="ad-block">
+        <div class="ad-rule">
+          <div class="ad-rule-line"></div>
+          <div class="ad-label">المستشار للأعمال</div>
+          <div class="ad-rule-line"></div>
+        </div>
+        <div class="ad-title">قرارات أعمالك تستحق رأياً حقيقياً</div>
+        <div class="ad-desc">تحليل فوري بالذكاء الاصطناعي، ومراجعة بشرية متخصصة عند الحاجة.</div>
+        <a href="https://alamodiai.site" target="_blank" class="ad-btn">استشر الآن</a>
+        <div class="ad-note">رأي مجاني لأول مرة · بدون تسجيل</div>
+      </div>
+    </aside>
+
+  </div>
+</BaseLayout>

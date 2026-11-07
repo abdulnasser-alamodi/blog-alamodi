@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featured = posts[0];
+const rest = posts.slice(1);
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
+}
+
+function readTime(body: string) {
+  const words = body.split(/\s+/).length;
+  return Math.ceil(words / 200);
+}
+---
+<BaseLayout>
+  <div class="home-layout">
+
+    <!-- العمود الرئيسي -->
+    <div class="main-col">
+
+      <!-- المقال المميز -->
+      {featured && (
+        <section class="featured-section">
+          <div class="eyebrow">المقال الأحدث</div>
+          <div class="featured-grid">
+            <div class="featured-text">
+              <h2 class="featured-title">
+                <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
+              </h2>
+              <p class="featured-deck">{featured.data.description}</p>
+              <div class="featured-byline">
+                <span class="byline-name">{featured.data.author}</span>
+                <span>·</span>
+                <span>{formatDate(featured.data.pubDate)}</span>
+                <span>·</span>
+                <span>{2} دقائق للقراءة</span>
+              </div>
+              <div class="tags">
+                {featured.data.tags.map(tag => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+            <div class="featured-img-box">
+              {featured.data.image
+                ? <img src={featured.data.image} alt={featured.data.title}>
+                : null}
+              <div class="featured-quote">
+                <span class="quote-mark">"</span>
+                الحرية الحقيقية ليست أن تشتري كل ما تستطيع شراءه
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- المقالات الأخرى -->
+      {rest.length > 0 && (
+        <section class="articles-section">
+          <div class="section-header">
+            <div class="section-title">مقالات سابقة</div>
+            <div class="section-rule"></div>
+          </div>
+          <div class="articles-grid">
+            {rest.map(post => (
+              <article class="article-card">
+                <div class="card-tag">{post.data.tags[0]}</div>
+                <h3 class="card-title">
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                </h3>
+                <p class="card-excerpt">{post.data.description}</p>
+                <div class="card-date">{formatDate(post.data.pubDate)}</div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </div>
+
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar">
+      <div class="sb-section">
+        <div class="sb-head">الموضوعات</div>
+        <a href="/tag/الأعمال" class="sb-link"><span>الأعمال والإدارة</span><span class="sb-count">٢</span></a>
+        <a href="/tag/القيادة" class="sb-link"><span>القيادة</span><span class="sb-count">١</span></a>
+        <a href="/tag/علم-النفس" class="sb-link"><span>علم النفس</span><span class="sb-count">١</span></a>
+        <a href="/tag/التفاوض" class="sb-link"><span>التفاوض</span><span class="sb-count">٠</span></a>
+        <a href="/tag/تسويق" class="sb-link"><span>التسويق</span><span class="sb-count">١</span></a>
+      </div>
+
+      <div class="ad-block">
+        <div class="ad-rule">
+          <div class="ad-rule-line"></div>
+          <div class="ad-label">المستشار للأعمال</div>
+          <div class="ad-rule-line"></div>
+        </div>
+        <div class="ad-title">قرارات أعمالك تستحق رأياً حقيقياً</div>
+        <div class="ad-desc">تحليل فوري بالذكاء الاصطناعي، ومراجعة بشرية متخصصة عند الحاجة — في مكان واحد.</div>
+        <a href="https://alamodiai.site" target="_blank" class="ad-btn">استشر الآن على alamodiai.site</a>
+        <div class="ad-note">رأي مجاني لأول مرة · بدون تسجيل</div>
+      </div>
+    </aside>
+
+  </div>
+</BaseLayout>
