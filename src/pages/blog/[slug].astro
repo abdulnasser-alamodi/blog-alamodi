@@ -13,47 +13,81 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-function formatDate(date) {
-  return new Intl.DateTimeFormat('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
+function formatDate(d: Date) {
+  return d.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 ---
-<BaseLayout title={post.data.title} description={post.data.description}>
-  <div class="article-layout">
-    <article class="article-main">
-      <header class="article-header">
-        <div class="article-eyebrow">
-          {post.data.tags.map((tag, i) => (
-            <span>{i > 0 ? ' · ' : ''}<a href={'/tag/' + tag}>{tag}</a></span>
-          ))}
-        </div>
-        <h1 class="article-h1">{post.data.title}</h1>
-        <p class="article-desc">{post.data.description}</p>
-        <div class="article-meta">
-          <span class="byline-name">{post.data.author}</span>
-          <span>·</span>
-          <span>{formatDate(post.data.pubDate)}</span>
-        </div>
-      </header>
-      {post.data.image && <img src={post.data.image} alt={post.data.title} class="article-cover">}
-      <div class="article-body"><Content /></div>
-    </article>
-    <aside class="article-sidebar sidebar">
-      <div class="sb-section">
-        <div class="sb-head">الموضوعات</div>
-        <a href="/tag/الأعمال" class="sb-link"><span>الأعمال والإدارة</span></a>
-        <a href="/tag/القيادة" class="sb-link"><span>القيادة</span></a>
+<BaseLayout title={post.data.title} description={post.data.description} image={post.data.image}>
+
+  <!-- HERO -->
+  <div class="article-hero">
+    <div class="site-wrapper">
+      <div class="hero-category">{post.data.tags?.join(' · ') ?? 'مقال'}</div>
+      <h1 class="hero-title">{post.data.title}</h1>
+      {post.data.description && <p class="hero-description">{post.data.description}</p>}
+      <div class="hero-meta">
+        <span class="hero-author">{post.data.author}</span>
+        <span>·</span>
+        <span>{formatDate(post.data.pubDate)}</span>
+        <span>·</span>
+        <span>وقت القراءة: دقيقتان</span>
       </div>
-      <div class="ad-block">
-        <div class="ad-rule">
-          <div class="ad-rule-line"></div>
-          <div class="ad-label">المستشار للأعمال</div>
-          <div class="ad-rule-line"></div>
+    </div>
+  </div>
+
+  <!-- COVER IMAGE -->
+  {post.data.image && (
+    <img src={post.data.image} alt={post.data.title} class="article-cover"
+         onerror="this.style.display='none'" />
+  )}
+
+  <!-- BODY -->
+  <div class="article-layout site-wrapper">
+    <article class="article-content">
+      <div class="article-body">
+        <Content />
+      </div>
+
+      <!-- SHARE -->
+      <div class="share-bar">
+        <span class="share-label">شارك المقال:</span>
+        <a class="share-btn"
+           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent('https://blog.alamodi.site/blog/' + post.id)}`}
+           target="_blank" rel="noopener">
+          𝕏 تويتر
+        </a>
+        <a class="share-btn"
+           href={`https://wa.me/?text=${encodeURIComponent(post.data.title + ' - ' + 'https://blog.alamodi.site/blog/' + post.id)}`}
+           target="_blank" rel="noopener">
+          واتساب
+        </a>
+      </div>
+    </article>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-widget ad-widget">
+        <div class="widget-header">استشاراتي</div>
+        <div class="widget-body">
+          <div class="ad-eyebrow">منصة الاستشارات الذكية</div>
+          <div class="ad-title">الذكاء الاصطناعي في خدمة أعمالك</div>
+          <p class="ad-desc">
+            حلول استشارية متكاملة بتقنيات الذكاء الاصطناعي لتطوير مؤسستك.
+          </p>
+          <a href="https://alamodiai.site" target="_blank" rel="noopener" class="ad-cta">
+            اكتشف الآن
+          </a>
         </div>
-        <div class="ad-title">قرارات أعمالك تستحق رأياً حقيقياً</div>
-        <div class="ad-desc">تحليل فوري بالذكاء الاصطناعي، ومراجعة بشرية متخصصة عند الحاجة.</div>
-        <a href="https://alamodiai.site" target="_blank" class="ad-btn">استشر الآن</a>
-        <div class="ad-note">رأي مجاني لأول مرة · بدون تسجيل</div>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="widget-header">عن الكاتب</div>
+        <div class="widget-body" style="text-align:center;">
+          <div class="about-avatar" style="margin:0 auto 0.8rem;">ع</div>
+          <div class="about-name">عبدالناصر محمد العمودي</div>
+          <p class="about-bio">مستشار في الأعمال والقيادة والتفاوض.</p>
+        </div>
       </div>
     </aside>
   </div>
-</BaseLayout> 
+</BaseLayout>

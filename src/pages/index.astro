@@ -5,106 +5,140 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-
 const featured = posts[0];
 const rest = posts.slice(1);
 
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
+function formatDate(d: Date) {
+  return d.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-function readTime(body: string) {
-  const words = body.split(/\s+/).length;
-  return Math.ceil(words / 200);
-}
+const tagMap: Record<string, string> = {
+  'علم النفس': '#psychology',
+  'الأعمال': '#business',
+  'القيادة': '#leadership',
+  'التفاوض': '#negotiation',
+  'تسويق': '#business',
+  'اقتصاد': '#business',
+  'تنمية ذاتية': '#psychology',
+  'ثقافة مؤسسية': '#business',
+  'إدارة': '#business',
+};
 ---
-<BaseLayout>
-  <div class="home-layout">
-
-    <!-- العمود الرئيسي -->
-    <div class="main-col">
-
-      <!-- المقال المميز -->
-      {featured && (
-        <section class="featured-section">
-          <div class="eyebrow">المقال الأحدث</div>
-          <div class="featured-grid">
-            <div class="featured-text">
-              <h2 class="featured-title">
+<BaseLayout title="مدونة العمودي - منصة معرفية">
+  <div class="site-wrapper">
+    <div class="page-grid">
+      <!-- MAIN CONTENT -->
+      <main>
+        <!-- FEATURED -->
+        {featured && (
+          <article class="featured-article">
+            <div class="featured-image-wrap">
+              {featured.data.image ? (
+                <img src={featured.data.image} alt={featured.data.title}
+                     onerror="this.parentElement.innerHTML='<div class=featured-image-placeholder><span>✦</span></div>'" />
+              ) : (
+                <div class="featured-image-placeholder"><span>✦</span></div>
+              )}
+              <span class="featured-badge">مقال مختار</span>
+            </div>
+            <div class="featured-content">
+              <div class="featured-category">{featured.data.tags?.[0] ?? 'مقال'}</div>
+              <h1 class="featured-title">
                 <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
-              </h2>
-              <p class="featured-deck">{featured.data.description}</p>
-              <div class="featured-byline">
-                <span class="byline-name">{featured.data.author}</span>
-                <span>·</span>
+              </h1>
+              <p class="featured-excerpt">{featured.data.description}</p>
+              <div class="article-meta">
+                <span class="meta-author">{featured.data.author}</span>
+                <span class="meta-sep">·</span>
                 <span>{formatDate(featured.data.pubDate)}</span>
-                <span>·</span>
-                <span>{2} دقائق للقراءة</span>
-              </div>
-              <div class="tags">
-                {featured.data.tags.map(tag => <span class="tag">{tag}</span>)}
+                <span class="meta-sep">·</span>
+                <span>وقت القراءة: دقيقتان</span>
               </div>
             </div>
-            <div class="featured-img-box">
-              {featured.data.image
-                ? <img src={featured.data.image} alt={featured.data.title}>
-                : null}
-              <div class="featured-quote">
-                <span class="quote-mark">"</span>
-                الحرية الحقيقية ليست أن تشتري كل ما تستطيع شراءه
-              </div>
+          </article>
+        )}
+
+        <!-- MORE ARTICLES -->
+        {rest.length > 0 && (
+          <section>
+            <div class="section-header">
+              <h2 class="section-title">مقالات حديثة</h2>
+              <span class="section-line"></span>
             </div>
+            <div class="articles-grid">
+              {rest.map(post => (
+                <article class="article-card">
+                  <div class="card-image">
+                    {post.data.image ? (
+                      <img src={post.data.image} alt={post.data.title}
+                           onerror="this.parentElement.innerHTML='<div class=card-image-placeholder>✦</div>'" />
+                    ) : (
+                      <div class="card-image-placeholder">✦</div>
+                    )}
+                  </div>
+                  <div class="card-body">
+                    <div class="card-category">{post.data.tags?.[0] ?? 'مقال'}</div>
+                    <h2 class="card-title">
+                      <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                    </h2>
+                    <p class="card-excerpt">{post.data.description}</p>
+                    <div class="card-meta">
+                      <span>{post.data.author}</span>
+                      <span>·</span>
+                      <span>{formatDate(post.data.pubDate)}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <!-- About -->
+        <div class="sidebar-widget about-widget">
+          <div class="widget-header">عن الكاتب</div>
+          <div class="widget-body">
+            <div class="about-avatar">ع</div>
+            <div class="about-name">عبدالناصر محمد العمودي</div>
+            <p class="about-bio">
+              مستشار في الأعمال والقيادة، يكتب في التفاوض وعلم النفس التطبيقي
+              من واقع تجربة عملية ميدانية وقراءة نقدية معمّقة.
+            </p>
           </div>
-        </section>
-      )}
-
-      <!-- المقالات الأخرى -->
-      {rest.length > 0 && (
-        <section class="articles-section">
-          <div class="section-header">
-            <div class="section-title">مقالات سابقة</div>
-            <div class="section-rule"></div>
-          </div>
-          <div class="articles-grid">
-            {rest.map(post => (
-              <article class="article-card">
-                <div class="card-tag">{post.data.tags[0]}</div>
-                <h3 class="card-title">
-                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                </h3>
-                <p class="card-excerpt">{post.data.description}</p>
-                <div class="card-date">{formatDate(post.data.pubDate)}</div>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-    </div>
-
-    <!-- الشريط الجانبي -->
-    <aside class="sidebar">
-      <div class="sb-section">
-        <div class="sb-head">الموضوعات</div>
-        <a href="/tag/الأعمال" class="sb-link"><span>الأعمال والإدارة</span><span class="sb-count">٢</span></a>
-        <a href="/tag/القيادة" class="sb-link"><span>القيادة</span><span class="sb-count">١</span></a>
-        <a href="/tag/علم-النفس" class="sb-link"><span>علم النفس</span><span class="sb-count">١</span></a>
-        <a href="/tag/التفاوض" class="sb-link"><span>التفاوض</span><span class="sb-count">٠</span></a>
-        <a href="/tag/تسويق" class="sb-link"><span>التسويق</span><span class="sb-count">١</span></a>
-      </div>
-
-      <div class="ad-block">
-        <div class="ad-rule">
-          <div class="ad-rule-line"></div>
-          <div class="ad-label">المستشار للأعمال</div>
-          <div class="ad-rule-line"></div>
         </div>
-        <div class="ad-title">قرارات أعمالك تستحق رأياً حقيقياً</div>
-        <div class="ad-desc">تحليل فوري بالذكاء الاصطناعي، ومراجعة بشرية متخصصة عند الحاجة — في مكان واحد.</div>
-        <a href="https://alamodiai.site" target="_blank" class="ad-btn">استشر الآن على alamodiai.site</a>
-        <div class="ad-note">رأي مجاني لأول مرة · بدون تسجيل</div>
-      </div>
-    </aside>
 
+        <!-- Ad -->
+        <div class="sidebar-widget ad-widget">
+          <div class="widget-header">استشاراتي</div>
+          <div class="widget-body">
+            <div class="ad-eyebrow">منصة الاستشارات الذكية</div>
+            <div class="ad-title">الذكاء الاصطناعي في خدمة أعمالك</div>
+            <p class="ad-desc">
+              حلول استشارية متكاملة بتقنيات الذكاء الاصطناعي لتطوير مؤسستك وتحقيق أهدافك الاستراتيجية.
+            </p>
+            <a href="https://alamodiai.site" target="_blank" rel="noopener" class="ad-cta">
+              اكتشف الآن
+            </a>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        {posts.flatMap(p => p.data.tags).filter((v, i, a) => a.indexOf(v) === i).length > 0 && (
+          <div class="sidebar-widget">
+            <div class="widget-header">المواضيع</div>
+            <div class="widget-body">
+              <div class="tags-cloud">
+                {[...new Set(posts.flatMap(p => p.data.tags))].map(tag => (
+                  <a href={tagMap[tag] ?? '#'} class="tag">{tag}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
   </div>
 </BaseLayout>

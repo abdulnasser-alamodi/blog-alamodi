@@ -1,83 +1,96 @@
 ---
-import '../styles/global.css';
 export interface Props {
-  title?: string;
+  title: string;
   description?: string;
   image?: string;
+  tags?: string[];
 }
-const { title = 'مدونة العمودي', description = 'مقالات في الأعمال والقيادة والإدارة', image } = Astro.props;
+const { title, description = "منصة معرفية في الأعمال والقيادة والتفاوض وعلم النفس", image, tags = [] } = Astro.props;
+const siteTitle = "مدونة العمودي";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{title === 'مدونة العمودي' ? title : `${title} — مدونة العمودي`}</title>
-  <meta name="description" content={description}>
-  <link rel="canonical" href={canonicalURL}>
-  {image && <meta property="og:image" content={image}>}
-  <meta property="og:title" content={title}>
-  <meta property="og:description" content={description}>
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" href="/styles/global.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title === siteTitle ? title : `${title} | ${siteTitle}`}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  {image && <meta property="og:image" content={image} />}
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
-
-  <!-- ═══ MASTHEAD ═══ -->
-  <header class="masthead">
-    <div class="masthead-inner">
-      <div class="masthead-top">
-        <div class="masthead-date" id="current-date">السبت ٧ نوفمبر ٢٠٢٦</div>
-        <nav class="masthead-nav">
-          <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
-          <a href="/tag/الأعمال">الأعمال</a>
-          <a href="/tag/القيادة">القيادة</a>
-          <a href="/tag/التفاوض">التفاوض</a>
-          <a href="/tag/علم-النفس">علم النفس</a>
-        </nav>
-      </div>
-      <div class="masthead-center">
-        <div class="masthead-side-right">
-          <div>مستشار إداري معتمد</div>
-          <div class="gold">PMP®</div>
-        </div>
-        <a href="/" class="logo-block">
-          <img src="/images/logo.png" alt="مدونة العمودي" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <div class="logo-fallback" style="display:none">
-            <div class="logo-name">مدونة العمودي</div>
-            <div class="logo-rule"><span class="rule-line"></span><span class="diamond"></span><span class="rule-line"></span></div>
-            <div class="logo-tagline">أعمال · قيادة · إدارة</div>
-          </div>
-        </a>
-        <div class="masthead-side-left">
-          <div>blog.alamodi.site</div>
-          <a href="https://alamodiai.site" target="_blank" class="gold">المستشار للأعمال ←</a>
-        </div>
+  <!-- MASTHEAD -->
+  <header class="site-masthead">
+    <div class="masthead-top site-wrapper">
+      <a href="/" class="site-logo">
+        <img src="/images/logo.svg" alt="مدونة العمودي" class="logo-img"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="logo-text" style="display:none;">مدونة العمودي</span>
+        <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
+      </a>
+      <div class="masthead-meta">
+        <div>الأعمال · القيادة · التفاوض · علم النفس</div>
+        <div>blog.alamodi.site</div>
       </div>
     </div>
+    <nav class="site-nav site-wrapper">
+      <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
+      <a href="/#business">الأعمال</a>
+      <a href="/#leadership">القيادة</a>
+      <a href="/#negotiation">التفاوض</a>
+      <a href="/#psychology">علم النفس</a>
+      <a href="https://alamodiai.site" target="_blank" rel="noopener">الاستشارات</a>
+    </nav>
   </header>
 
-  <!-- ═══ CONTENT ═══ -->
   <main>
     <slot />
   </main>
 
-  <!-- ═══ FOOTER ═══ -->
+  <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-logo">مدونة العمودي</div>
-      <div class="footer-links">
-        <a href="https://alamodiai.site" target="_blank">المستشار للأعمال</a>
-        <span class="sep">·</span>
-        <a href="https://alamodi.site" target="_blank">الموقع الشخصي</a>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="site-logo">
+          <span class="logo-text">مدونة العمودي</span>
+          <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
+        </div>
+        <p class="footer-about">
+          منصة معرفية متخصصة في الأعمال والقيادة والتفاوض وعلم النفس التطبيقي،
+          يكتبها عبدالناصر محمد العمودي من واقع تجربة عملية وقراءة نقدية معمّقة.
+        </p>
       </div>
-      <div class="footer-copy">© {new Date().getFullYear()} عبدالناصر محمد العمودي — جميع الحقوق محفوظة</div>
+      <div>
+        <h4 class="footer-col-title">أقسام المدونة</h4>
+        <ul class="footer-links">
+          <li><a href="/#business">الأعمال والإدارة</a></li>
+          <li><a href="/#leadership">القيادة</a></li>
+          <li><a href="/#negotiation">التفاوض</a></li>
+          <li><a href="/#psychology">علم النفس</a></li>
+          <li><a href="/#think">المقالات الفكرية</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">روابط مهمة</h4>
+        <ul class="footer-links">
+          <li><a href="https://alamodiai.site" target="_blank">منصة الاستشارات</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © {new Date().getFullYear()} <span class="footer-gold">مدونة العمودي</span> — جميع الحقوق محفوظة
     </div>
   </footer>
-
 </body>
 </html>
-
