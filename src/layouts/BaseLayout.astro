@@ -26,7 +26,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
@@ -39,10 +39,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <span class="logo-text" style="display:none;">مدونة العمودي</span>
         <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
       </a>
-      <div class="masthead-meta">
-        <div>الأعمال · القيادة · التفاوض · علم النفس</div>
-        <div>blog.alamodi.site</div>
-      </div>
     </div>
     <nav class="site-nav site-wrapper">
       <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
@@ -61,33 +57,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="site-logo">
-          <span class="logo-text">مدونة العمودي</span>
-          <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
-        </div>
-        <p class="footer-about">
-          منصة معرفية متخصصة في الأعمال والقيادة والتفاوض وعلم النفس التطبيقي،
-          يكتبها عبدالناصر محمد العمودي من واقع تجربة عملية وقراءة نقدية معمّقة.
-        </p>
+    <div class="footer-content">
+      <div class="site-logo">
+        <span class="logo-text">مدونة العمودي</span>
+        <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
       </div>
-      <div>
-        <h4 class="footer-col-title">أقسام المدونة</h4>
-        <ul class="footer-links">
-          <li><a href="/#business">الأعمال والإدارة</a></li>
-          <li><a href="/#leadership">القيادة</a></li>
-          <li><a href="/#negotiation">التفاوض</a></li>
-          <li><a href="/#psychology">علم النفس</a></li>
-          <li><a href="/#think">المقالات الفكرية</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="footer-col-title">روابط مهمة</h4>
-        <ul class="footer-links">
-          <li><a href="https://alamodiai.site" target="_blank">منصة الاستشارات</a></li>
-        </ul>
-      </div>
+      <p class="footer-about">
+        منصة معرفية متخصصة في الأعمال والقيادة والتفاوض وعلم النفس التطبيقي،
+        يكتبها عبدالناصر محمد العمودي من واقع تجربة عملية وقراءة نقدية معمّقة.
+      </p>
+      <a href="https://alamodiai.site" target="_blank" rel="noopener" class="footer-cta">منصة الاستشارات ←</a>
     </div>
     <div class="footer-bottom">
       © {new Date().getFullYear()} <span class="footer-gold">مدونة العمودي</span> — جميع الحقوق محفوظة
