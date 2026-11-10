@@ -5,7 +5,10 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    tags: z.array(z.string()).optional(),
+    author: z.string().default("عبدالناصر محمد العمودي"),
+    image: z.string().optional(),
+    lang: z.string().default("ar"),
+    tags: z.array(z.string()).default([]),
   }),
 });
 
@@ -14,7 +17,8 @@ const ghashmarah = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    tags: z.array(z.string()).optional(),
+    lang: z.string().default("ar"),
+    tags: z.array(z.string()).default([]),
   }),
 });
 
