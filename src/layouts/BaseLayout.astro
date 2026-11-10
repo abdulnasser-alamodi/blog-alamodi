@@ -30,17 +30,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
-  <!-- MASTHEAD -->
   <header class="site-masthead">
-    <div class="masthead-top site-wrapper">
-      <a href="/" class="site-logo">
-        <img src="/images/logo.svg" alt="مدونة العمودي" class="logo-img"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <span class="logo-text" style="display:none;">مدونة العمودي</span>
-        <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
-      </a>
-    </div>
-    <nav class="site-nav site-wrapper">
+    <h1 class="site-title">مدوّنة العمودي</h1>
+    <p class="site-description">منصة معرفية | عبدالناصر العمودي</p>
+    <nav class="site-nav">
       <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
       <a href="/#business">الأعمال</a>
       <a href="/#leadership">القيادة</a>
@@ -54,23 +47,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <main>
     <slot />
   </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-content">
-      <div class="site-logo">
-        <span class="logo-text">مدونة العمودي</span>
-        <span class="logo-tagline">منصة معرفية | عبدالناصر العمودي</span>
-      </div>
-      <p class="footer-about">
-        منصة معرفية متخصصة في الأعمال والقيادة والتفاوض وعلم النفس التطبيقي،
-        يكتبها عبدالناصر محمد العمودي من واقع تجربة عملية وقراءة نقدية معمّقة.
-      </p>
-      <a href="https://alamodiai.site" target="_blank" rel="noopener" class="footer-cta">منصة الاستشارات ←</a>
-    </div>
-    <div class="footer-bottom">
-      © {new Date().getFullYear()} <span class="footer-gold">مدونة العمودي</span> — جميع الحقوق محفوظة
-    </div>
-  </footer>
 </body>
 </html>

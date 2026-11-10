@@ -27,101 +27,48 @@ const tagMap: Record<string, string> = {
 <BaseLayout title="مدونة العمودي - منصة معرفية">
   <div class="site-wrapper">
     <div class="page-grid">
-      <!-- MAIN CONTENT -->
-      <main>
-        <!-- FEATURED -->
+      <div>
         {featured && (
-          <article class="featured-article">
-            <div class="featured-image-wrap">
-              {featured.data.image ? (
-                <img src={featured.data.image} alt={featured.data.title}
-                     onerror="this.parentElement.innerHTML='<div class=featured-image-placeholder><span>✦</span></div>'" />
-              ) : (
-                <div class="featured-image-placeholder"><span>✦</span></div>
-              )}
-              <span class="featured-badge">مقال مختار</span>
-            </div>
-            <div class="featured-content">
-              <div class="featured-category">{featured.data.tags?.[0] ?? 'مقال'}</div>
-              <h1 class="featured-title">
-                <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
-              </h1>
-              <p class="featured-excerpt">{featured.data.description}</p>
-              <div class="article-meta">
-                <span class="meta-author">{featured.data.author}</span>
-                <span class="meta-sep">·</span>
-                <span>{formatDate(featured.data.pubDate)}</span>
-                <span class="meta-sep">·</span>
-                <span>وقت القراءة: دقيقتان</span>
+          <article class="featured">
+            {featured.data.image && (
+              <div class="featured-image">
+                <img src={featured.data.image} alt={featured.data.title} />
               </div>
+            )}
+            <div class="featured-text">
+              <h2 class="featured-title">
+                <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
+              </h2>
+              <p class="featured-excerpt">{featured.data.description}</p>
+              <div class="featured-meta">{featured.data.author} · {formatDate(featured.data.pubDate)}</div>
             </div>
           </article>
         )}
 
-        <!-- MORE ARTICLES -->
         {rest.length > 0 && (
           <section>
-            <div class="section-header">
-              <h2 class="section-title">مقالات حديثة</h2>
-              <span class="section-line"></span>
-            </div>
-            <div class="articles-grid">
+            <h2 class="posts-heading">مقالات أخرى</h2>
+            <ul class="post-list">
               {rest.map(post => (
-                <article class="article-card">
-                  <div class="card-image">
-                    {post.data.image ? (
-                      <img src={post.data.image} alt={post.data.title}
-                           onerror="this.parentElement.innerHTML='<div class=card-image-placeholder>✦</div>'" />
-                    ) : (
-                      <div class="card-image-placeholder">✦</div>
-                    )}
-                  </div>
-                  <div class="card-body">
-                    <div class="card-category">{post.data.tags?.[0] ?? 'مقال'}</div>
-                    <h2 class="card-title">
-                      <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                    </h2>
-                    <p class="card-excerpt">{post.data.description}</p>
-                    <div class="card-meta">
-                      <span>{post.data.author}</span>
-                      <span>·</span>
-                      <span>{formatDate(post.data.pubDate)}</span>
-                    </div>
-                  </div>
-                </article>
+                <li class="post-list-item">
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                  <div class="post-date">{formatDate(post.data.pubDate)}</div>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         )}
-      </main>
+      </div>
 
-      <!-- SIDEBAR -->
       <aside class="sidebar">
-        <!-- Advisor card -->
-        <div class="advisor-card">
-          <div class="advisor-avatar">ع</div>
-          <div class="advisor-eyebrow">المستشار</div>
-          <div class="advisor-name">عبدالناصر محمد العمودي</div>
-          <p class="advisor-bio">
-            مستشار في الأعمال والقيادة، يكتب في التفاوض وعلم النفس التطبيقي
-            من واقع تجربة عملية ميدانية وقراءة نقدية معمّقة.
-          </p>
-          <a href="https://alamodiai.site" target="_blank" rel="noopener" class="advisor-cta">استشر الآن ←</a>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card-title">المواضيع</h3>
+          <ul class="topics-list">
+            {[...new Set(posts.flatMap(p => p.data.tags))].map(tag => (
+              <li><a href={tagMap[tag] ?? '#'}>{tag}</a></li>
+            ))}
+          </ul>
         </div>
-
-        <!-- Tags -->
-        {posts.flatMap(p => p.data.tags).filter((v, i, a) => a.indexOf(v) === i).length > 0 && (
-          <div class="sidebar-widget">
-            <div class="widget-header">المواضيع</div>
-            <div class="widget-body">
-              <div class="tags-cloud">
-                {[...new Set(posts.flatMap(p => p.data.tags))].map(tag => (
-                  <a href={tagMap[tag] ?? '#'} class="tag">{tag}</a>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
       </aside>
     </div>
   </div>
