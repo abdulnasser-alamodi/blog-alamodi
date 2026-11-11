@@ -1,51 +1,40 @@
 ---
-export interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  tags?: string[];
-}
-const { title, description = "منصة معرفية في الأعمال والقيادة والتفاوض وعلم النفس", image, tags = [] } = Astro.props;
-const siteTitle = "مدونة العمودي";
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const { title } = Astro.props;
 ---
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title === siteTitle ? title : `${title} | ${siteTitle}`}</title>
-  <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalURL} />
-  <!-- Open Graph -->
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalURL} />
-  {image && <meta property="og:image" content={image} />}
-  <!-- Fonts -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" />
   <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
-  <header class="site-masthead">
-    <h1 class="site-title">مدوّنة العمودي</h1>
-    <p class="site-description">منصة معرفية | عبدالناصر العمودي</p>
-    <nav class="site-nav">
-      <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>الرئيسية</a>
-      <a href="/#business">الأعمال</a>
-      <a href="/#leadership">القيادة</a>
-      <a href="/#negotiation">التفاوض</a>
-      <a href="/#psychology">علم النفس</a>
-      <a href="/ghashmarah" class={Astro.url.pathname.startsWith('/ghashmarah') ? 'active' : ''}>غشمرة</a>
-      <a href="https://alamodiai.site" target="_blank" rel="noopener">الاستشارات</a>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="header-meta">مستشار إداري معتمد · PMP</div>
+      <div class="site-title">
+        <h1>مدوّنة العمودي</h1>
+        <p>أعمال · قيادة · إدارة</p>
+      </div>
+      <div class="header-meta">عبدالناصر العمودي</div>
+    </div>
+    <nav class="header-nav">
+      <a href="/" class="nav-link">الرئيسية</a>
+      <a href="/ghashmarah" class="nav-link">غشمرة</a>
+      <a href="/blog" class="nav-link">الأعمال</a>
     </nav>
   </header>
-
-  <main>
-    <slot />
-  </main>
+  <slot />
+  <footer class="site-footer">
+    <span>© ٢٠٢٦ عبدالناصر محمد العمودي</span>
+    <div class="footer-links">
+      <a href="https://alamodi.site">الموقع الشخصي</a>
+      <a href="https://alamodi.site/ap">المستشار للأعمال</a>
+    </div>
+  </footer>
 </body>
 </html>

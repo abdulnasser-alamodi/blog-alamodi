@@ -10,92 +10,220 @@ const rest = allPosts.slice(1);
 ---
 
 <BaseLayout title="مدوّنة العمودي">
-  <div class="main-layout">
-    <main class="content-area">
+<div class="page-wrap">
+  <main class="content-col">
 
-      <div class="section-label">المقال الأحدث</div>
-      <article class="featured-article">
-        <div class="article-category">{featured.data.tags?.join(" · ")}</div>
-        <h2 class="featured-title">
+    <div class="sec-label">المقال الأحدث</div>
+    {featured && (
+      <article class="featured">
+        <div class="cat">{featured.data.tags?.join(" · ")}</div>
+        <h2 class="f-title">
           <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
         </h2>
-        <p class="featured-excerpt">{featured.data.description}</p>
-        <div class="article-meta">
+        <p class="f-excerpt">{featured.data.description}</p>
+        <div class="meta">
           <span>{featured.data.author ?? "عبدالناصر العمودي"}</span>
-          <div class="meta-dot"></div>
-          <span>{featured.data.pubDate.toLocaleDateString("ar-SA", { year:"numeric", month:"long", day:"numeric" })}</span>
+          <span class="dot"></span>
+          <span>{featured.data.pubDate.toLocaleDateString("ar-SA",{year:"numeric",month:"long",day:"numeric"})}</span>
         </div>
         <a class="read-more" href={`/blog/${featured.id}`}>قراءة المقال ←</a>
       </article>
+    )}
 
-      {rest.length > 0 && (
-        <>
-          <div class="section-label">مقالات سابقة</div>
-          <div class="articles-grid">
-            {rest.map((post) => (
-              <article class="article-card">
-                <div class="article-category">{post.data.tags?.[0]}</div>
-                <h3 class="card-title">
-                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                </h3>
-                <p class="card-excerpt">{post.data.description}</p>
-                <div class="article-meta">
-                  <span>{post.data.pubDate.toLocaleDateString("ar-SA", { year:"numeric", month:"long", day:"numeric" })}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </>
-      )}
-
-    </main>
-    <aside class="sidebar">
-      <div class="consultant-card">
-        <div class="consultant-title">المستشار للأعمال</div>
-        <p class="consultant-desc">قرارات أعمالك تستحق رأياً حقيقياً. تحليل فوري بالذكاء الاصطناعي ومراجعة بشرية متخصصة.</p>
-        <a class="cta-button" href="https://alamodi.site/ap">استشر الآن</a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-title">الموضوعات</div>
-        <div class="topics-list">
-          <div class="topic-item"><span>الأعمال والإدارة</span></div>
-          <div class="topic-item"><span>القيادة</span></div>
-          <div class="topic-item"><span>علم النفس</span></div>
-          <div class="topic-item"><span>التفاوض</span></div>
+    {rest.length > 0 && (
+      <>
+        <div class="sec-label">مقالات سابقة</div>
+        <div class="grid">
+          {rest.map((post) => (
+            <article class="card">
+              <div class="cat">{post.data.tags?.[0]}</div>
+              <h3 class="c-title">
+                <a href={`/blog/${post.id}`}>{post.data.title}</a>
+              </h3>
+              <p class="c-excerpt">{post.data.description}</p>
+              <div class="meta">
+                <span>{post.data.pubDate.toLocaleDateString("ar-SA",{year:"numeric",month:"long",day:"numeric"})}</span>
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
-    </aside>
-  </div>
+      </>
+    )}
+
+  </main>
+  <aside class="sidebar-col">
+    <div class="advisor-card">
+      <div class="adv-title">المستشار للأعمال</div>
+      <p class="adv-desc">قرارات أعمالك تستحق رأياً حقيقياً. تحليل فوري بالذكاء الاصطناعي ومراجعة بشرية متخصصة.</p>
+      <a class="adv-btn" href="https://alamodi.site/ap">استشر الآن</a>
+    </div>
+    <div class="topics">
+      <div class="topics-label">الموضوعات</div>
+      <div class="topic-item">الأعمال والإدارة</div>
+      <div class="topic-item">القيادة</div>
+      <div class="topic-item">علم النفس</div>
+      <div class="topic-item">التفاوض</div>
+      <div class="topic-item">غشمرة</div>
+    </div>
+  </aside>
+</div>
 </BaseLayout>
 
 <style>
-.main-layout { display: grid; grid-template-columns: 1fr 280px; gap: 0; max-width: 1200px; margin: 0 auto; padding: 0 max(48px,5vw); min-height: 700px; }
-.content-area { border-left: 1px solid #D6CCBF; padding: 48px 48px 48px 0; }
-.sidebar { padding: 48px 0 48px 36px; }
-.section-label { font-size: 10px; letter-spacing: 0.18em; color: #A8853A; text-transform: uppercase; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-.section-label::after { content: ''; flex: 1; height: 1px; background: #D6CCBF; }
-.featured-article { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid #D6CCBF; display: flex; flex-direction: column; gap: 14px; }
-.article-category { font-size: 10px; letter-spacing: 0.16em; color: #A8853A; text-transform: uppercase; font-weight: 700; }
-.featured-title { font-family: 'Scheherazade New', serif; font-size: 32px; line-height: 1.5; color: #1C1208; margin: 0; font-weight: 700; }
-.featured-title a { color: inherit; text-decoration: none; }
-.featured-title a:hover { color: #A8853A; }
-.featured-excerpt { font-size: 15px; line-height: 1.8; color: #5C5047; margin: 0; }
-.article-meta { font-size: 11px; color: #7A6E62; display: flex; gap: 12px; align-items: center; }
-.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #D6CCBF; }
-.read-more { font-size: 12px; color: #A8853A; letter-spacing: 0.08em; font-weight: 600; text-decoration: none; }
-.articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.article-card { display: flex; flex-direction: column; gap: 8px; }
-.card-title { font-family: 'Scheherazade New', serif; font-size: 20px; line-height: 1.5; color: #1C1208; margin: 0; font-weight: 700; }
-.card-title a { color: inherit; text-decoration: none; }
-.card-title a:hover { color: #A8853A; }
-.card-excerpt { font-size: 13px; line-height: 1.75; color: #5C5047; margin: 0; }
-.consultant-card { background: #1C1208; color: #F7F3EE; padding: 24px; margin-bottom: 32px; }
-.consultant-title { font-family: 'Scheherazade New', serif; font-size: 20px; color: #A8853A; font-weight: 700; margin-bottom: 10px; }
-.consultant-desc { font-size: 12px; line-height: 1.8; color: #C4B8A8; margin-bottom: 20px; }
-.cta-button { background: #A8853A; color: #1C1208; padding: 10px 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: inline-block; text-decoration: none; }
-.sidebar-section { margin-bottom: 32px; }
-.sidebar-title { font-size: 10px; letter-spacing: 0.18em; color: #A8853A; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #D6CCBF; }
-.topics-list { display: flex; flex-direction: column; }
-.topic-item { padding: 10px 0; border-bottom: 1px solid #E8E0D4; font-size: 13px; color: #1C1208; cursor: pointer; }
+.page-wrap {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 max(48px, 5vw);
+}
+.content-col {
+  padding: 48px 48px 48px 0;
+  border-left: 1px solid #D6CCBF;
+}
+.sidebar-col {
+  padding: 48px 36px 48px 0;
+}
+.sec-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #A8853A;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #D6CCBF;
+}
+.featured {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid #D6CCBF;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cat {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: #A8853A;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.f-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 32px;
+  line-height: 1.5;
+  color: #1C1208;
+  margin: 0;
+  font-weight: 700;
+}
+.f-title a, .c-title a { color: inherit; text-decoration: none; }
+.f-title a:hover, .c-title a:hover { color: #A8853A; }
+.f-excerpt {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #5C5047;
+  margin: 0;
+}
+.meta {
+  font-size: 11px;
+  color: #7A6E62;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #D6CCBF;
+  display: inline-block;
+}
+.read-more {
+  font-size: 12px;
+  color: #A8853A;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.c-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #1C1208;
+  margin: 0;
+  font-weight: 700;
+}
+.c-excerpt {
+  font-size: 13px;
+  line-height: 1.75;
+  color: #5C5047;
+  margin: 0;
+}
+.advisor-card {
+  background: #1C1208;
+  color: #F7F3EE;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.adv-title {
+  font-family: 'Scheherazade New', serif;
+  font-size: 20px;
+  color: #A8853A;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.adv-desc {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #C4B8A8;
+  margin: 0 0 20px;
+}
+.adv-btn {
+  background: #A8853A;
+  color: #1C1208;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+}
+.topics { margin-top: 0; }
+.topics-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #A8853A;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #D6CCBF;
+}
+.topic-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #E8E0D4;
+  font-size: 13px;
+  color: #1C1208;
+  cursor: pointer;
+}
 .topic-item:hover { color: #A8853A; }
 </style>
