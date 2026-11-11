@@ -17,12 +17,13 @@ a:hover { text-decoration: underline; }
 }
 .header-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px 0 10px;
   border-bottom: 1px solid #D6CCBF;
 }
 .header-meta {
+  position: relative;
   font-size: 11px;
   color: #7A6E62;
   letter-spacing: 0.08em;

@@ -11,6 +11,21 @@ const rest = allPosts.slice(1);
 
 <BaseLayout title="مدوّنة العمودي">
 <div class="page-wrap">
+  <aside class="sidebar-col">
+    <div class="advisor-card">
+      <div class="adv-title">المستشار للأعمال</div>
+      <p class="adv-desc">قرارات أعمالك تستحق رأياً حقيقياً. تحليل فوري بالذكاء الاصطناعي ومراجعة بشرية متخصصة.</p>
+      <a class="adv-btn" href="https://alamodi.site/ap">استشر الآن</a>
+    </div>
+    <div class="topics">
+      <div class="topics-label">الموضوعات</div>
+      <div class="topic-item">الأعمال والإدارة</div>
+      <div class="topic-item">القيادة</div>
+      <div class="topic-item">علم النفس</div>
+      <div class="topic-item">التفاوض</div>
+      <div class="topic-item">غشمرة</div>
+    </div>
+  </aside>
   <main class="content-col">
 
     <div class="sec-label">المقال الأحدث</div>
@@ -51,28 +66,13 @@ const rest = allPosts.slice(1);
     )}
 
   </main>
-  <aside class="sidebar-col">
-    <div class="advisor-card">
-      <div class="adv-title">المستشار للأعمال</div>
-      <p class="adv-desc">قرارات أعمالك تستحق رأياً حقيقياً. تحليل فوري بالذكاء الاصطناعي ومراجعة بشرية متخصصة.</p>
-      <a class="adv-btn" href="https://alamodi.site/ap">استشر الآن</a>
-    </div>
-    <div class="topics">
-      <div class="topics-label">الموضوعات</div>
-      <div class="topic-item">الأعمال والإدارة</div>
-      <div class="topic-item">القيادة</div>
-      <div class="topic-item">علم النفس</div>
-      <div class="topic-item">التفاوض</div>
-      <div class="topic-item">غشمرة</div>
-    </div>
-  </aside>
 </div>
 </BaseLayout>
 
 <style>
 .page-wrap {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 280px 1fr;
   gap: 0;
   max-width: 1200px;
   margin: 0 auto;
