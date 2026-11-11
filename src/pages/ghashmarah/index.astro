@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('ghashmarah')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('ar', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    calendar: 'gregory',
+    numberingSystem: 'arab',
+  });
+}
+---
+
+<BaseLayout title="غشمرة" description="مقالات ساخرة عن العمل والإدارة">
+  <div class="ghashmarah-page">
+    <header class="page-header">
+      <h1>غشمرة</h1>
+      <p>مقالات ساخرة</p>
+    </header>
+
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li class="post-item">
+            <h2 class="post-item__title">
+              <a href={`/ghashmarah/${post.id}`}>{post.data.title}</a>
+            </h2>
+            <p class="post-item__desc">{post.data.description}</p>
+            <p class="meta">
+              {formatDate(post.data.pubDate)}
+              {' · '}
+              <a class="read-link" href={`/ghashmarah/${post.id}`}>اقرأ →</a>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .ghashmarah-page {
+    padding-block: 28px 48px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 700;
+    margin: 0;
+  }
+  .page-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 8px 0 0;
+  }
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .post-item {
+    border-bottom: 1px solid var(--border);
+    padding-block: 22px;
+  }
+  .post-item:last-child {
+    border-bottom: none;
+  }
+  .post-item__title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .post-item__title a {
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .post-item__desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  .meta {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .read-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+</style>

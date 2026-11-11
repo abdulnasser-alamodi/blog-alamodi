@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="عن المدونة" description="عن مدونة المستشار وعبدالناصر محمد العمودي">
+  <article class="about">
+    <h1>عن المدونة</h1>
+    <p>
+      أنا عبدالناصر محمد العمودي، مستشار إداري وباحث، بخبرة تتجاوز خمساً وعشرين عاماً في استشارات
+      الأعمال، عملت خلالها مع شركات وأفراد في السعودية والإمارات ومصر على مشاريع تتراوح بين
+      التخطيط الاستراتيجي ومراجعة الأنظمة الإدارية والقانونية.
+    </p>
+    <p>
+      هذه المدونة ليست امتداداً مباشراً لذلك العمل، بل مساحة شخصية أكتب فيها رؤى إدارية ونبضات
+      أدبية في آنٍ واحد — أحياناً عن قرار صعب، وأحياناً عن مفارقة صغيرة تستحق الضحك قبل التحليل.
+    </p>
+    <p>
+      إن كنت تبحث عن استشارة فعلية أو عن محادثة مع المستشار الذكي، الروابط أدناه تأخذك إلى
+      المكانين المناسبين.
+    </p>
+    <ul class="links">
+      <li><a href="https://alamodi.site/advisory">الموقع الاستشاري — alamodi.site/advisory</a></li>
+      <li><a href="https://alamodiai.site">المستشار الذكي — alamodiai.site</a></li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-block: 28px 48px;
+    max-width: 65ch;
+    margin: 0 auto;
+  }
+  .about h1 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 5vw, 42px);
+    font-weight: 700;
+    margin: 0 0 24px;
+  }
+  .about p {
+    font-size: 17px;
+    line-height: 1.9;
+    margin: 0 0 1.4em;
+  }
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+</style>

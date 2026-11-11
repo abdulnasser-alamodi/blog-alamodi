@@ -1,0 +1,153 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const today = new Date().toLocaleDateString('ar', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  calendar: 'gregory',
+  numberingSystem: 'arab',
+});
+---
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="site-header">
+      <img
+        class="site-header__logo"
+        src="/logo-mudawana.png"
+        alt="مدونة المستشار — عبدالناصر محمد العمودي"
+      />
+      <p class="site-header__domain">ALAMODI.SITE</p>
+      <p class="site-header__tagline">رؤى إدارية، ونبضات أدبية، لرحلة تتجاوز مألوف الحياة</p>
+    </header>
+
+    <nav class="site-nav">
+      <div class="container site-nav__inner">
+        <div class="site-nav__links">
+          <a href="/">الرئيسية</a>
+          <a href="/ghashmarah">غشمرة</a>
+          <a href="/about">عن المدونة</a>
+        </div>
+        <span class="site-nav__date">{today}</span>
+      </div>
+    </nav>
+
+    <div class="issue-line">
+      <div class="container issue-line__inner">
+        <span>نشرة غير دورية</span>
+        <span>ALAMODI.SITE — مدونة المستشار</span>
+      </div>
+    </div>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>© ٢٠٢٦ · مدونة المستشار · <a href="https://alamodi.site/advisory">alamodi.site</a></p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding-inline: 16px;
+  }
+
+  .site-header {
+    background: #000000;
+    padding-block: 18px;
+    text-align: center;
+  }
+  .site-header__logo {
+    max-width: 380px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .site-header__domain {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-align: center;
+    margin: 10px 0 0;
+  }
+  .site-header__tagline {
+    color: #c9bba8;
+    font-size: 13px;
+    text-align: center;
+    margin: 4px 0 0;
+  }
+
+  .site-nav {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding-block: 8px;
+  }
+  .site-nav__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12.5px;
+  }
+  .site-nav__links {
+    display: flex;
+    gap: 16px;
+  }
+  .site-nav__links a {
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .site-nav__links a:hover {
+    color: var(--accent);
+  }
+  .site-nav__date {
+    color: var(--muted);
+  }
+
+  .issue-line {
+    border-bottom: 1px solid var(--border);
+  }
+  .issue-line__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .site-footer {
+    border-top: 3px double var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding-block: 20px;
+  }
+  .site-footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+</style>
